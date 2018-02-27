@@ -9,14 +9,16 @@ if !ARGV.empty?
 end
 
 output = Hash["items" => []]
+shuangpinMapping = Hash["GHBI" => "HKD","OUYR" => "EUR","YYBH" => "GBP","MZYR" => "USD","AOYR" => "AUD","RIYR" => "JPY","HJYR" => "KRW"]
 data = JSON.parse(File.read('data.json'))
 base = data['base']
 units = data['units']
 
+
 if hasARGV
     str = ARGV[0].lstrip.gsub('$', 'usd').gsub('￥', 'cny').gsub('¥', 'jpy').gsub('£', 'gbp').gsub('€', 'eur')
     num = str.match(/^\d+/)
-    cy = str.match(/[a-zA-Z]{3}/)
+    cy = str.match(/[a-zA-Z]+/)
     if str.empty? || num.nil? || cy.nil?
         temp = Hash[
             "title" => 'No result',
@@ -28,6 +30,10 @@ if hasARGV
     else
         num = num[0]
         cy = cy[0].upcase
+        mapping="#{shuangpinMapping[cy]}"
+        if ! mapping.empty?
+            cy = mapping
+        end
         uri = URI("http://api.fixer.io/latest?base=#{cy}&symbols=#{units.join(',')}")
         result = JSON.parse(Net::HTTP.get(uri))
         result['rates'].each do |key, value|
