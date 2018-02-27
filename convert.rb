@@ -9,7 +9,7 @@ if !ARGV.empty?
 end
 
 output = Hash["items" => []]
-shuangpinMapping = Hash["GHBI" => "HKD","OUYR" => "EUR","YYBH" => "GBP","MZYR" => "USD","AOYR" => "AUD","RIYR" => "JPY","HJYR" => "KRW"]
+shuangpinMapping = Hash["GHBI" => "HKD","OUYR" => "EUR","YKBH" => "GBP","MWYR" => "USD","AOYR" => "AUD","RIYR" => "JPY","HJYR" => "KRW"]
 data = JSON.parse(File.read('data.json'))
 base = data['base']
 units = data['units']
