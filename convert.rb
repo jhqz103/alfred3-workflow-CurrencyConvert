@@ -26,7 +26,7 @@ if hasARGV
         if !num.nil?
             num = num[0]
         end
-        cy = str.match(/\s*[a-zA-Z]{3}/)
+        cy = str.match(/\s*[a-zA-Z]+/)
         if !cy.nil?
             cy = cy[0].lstrip.upcase
         end
@@ -47,6 +47,10 @@ if hasARGV
         ]
         output["items"].push(temp)
     else
+        mapping="#{shuangpinMapping[cy]}"
+        if ! mapping.empty?
+            cy = mapping
+        end
         if target.nil?
             if units.include?(cy)
                 units.delete(cy)
